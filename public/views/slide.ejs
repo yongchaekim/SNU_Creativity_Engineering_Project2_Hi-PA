@@ -1,0 +1,10 @@
+<script type="text/ejs" id="slide">
+<div class="reveal">
+    <div id="main-slide" class="slides">
+    </div>
+</div>
+[% if (isPresenter) { %]
+[% } else { %]
+    <a class="button is-primary" id="sync-button">Sync</a>
+[% } %]
+</script>

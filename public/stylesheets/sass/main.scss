@@ -1,0 +1,380 @@
+/*
+ * Layout Css
+ */
+
+html {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+
+}
+
+body {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+
+}
+.container{
+    width:100%;
+}
+#question-container {
+    display:none;
+  height: 60%; //FIXME: height percentage
+
+  position: relative;
+    
+}
+
+#slide-container {
+  height: 60%;
+  width: 60%;
+  position: relative;
+}
+
+/*Chat box implementation*/
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px;  bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px;  width:100%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+#gotoTimeline{
+    margin:3px;
+    width:100%;
+}
+#script-container {
+    
+    margin:auto;
+    position: relative;
+    bottom: 0px;
+    height: 250px;
+}
+
+#feedback-container {
+    margin-top:200px;
+  width: 100%;
+  height: 30%; //FIXME: height percentage
+    display:none;
+    position: relative;
+    right: 20px;
+    bottom: 60px;
+}
+
+/*
+ * Question Css
+ */
+
+#question-list-container {
+  height: 100%;
+  width: 252%;
+  right: 400px;
+  padding: 10px;
+  flex-grow: 1;
+  overflow: scroll;
+  position: relative;
+}
+
+#question-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+#question-form-container {
+  width: 100%;
+}
+
+$submit-button-height: 70px;
+
+#question-form-subcontainer {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+
+  > * {
+    margin-right: 10px;
+  }
+
+  > *:last-child {
+    margin-right: 0px;
+  }
+}
+
+
+#question-form-left {
+  display: flex;
+
+  flex-direction: column;
+  flex: 7;
+  #question-form-left-up {
+    display: flex;
+    flex-direction: row;
+    input {
+      font-size: 14px;
+    }
+    > * {
+      flex: 1;
+      margin-right: 10px;
+    }
+    > *:last-child{
+      margin-right: 0px;
+    }
+  }
+
+  #question-form-textarea {
+    height: 70px;
+    textarea {
+      min-height: 0px;
+      height: 100%;
+      resize: none;
+      font-size: 14px;
+    }
+  }
+
+  > * {
+    margin-bottom: 10px;
+  }
+  > *:last-child {
+    margin-bottom: 0px;
+  }
+}
+
+#question-form-down {
+  display: flex;
+  flex-direction: column;
+  #question-form-slidenumber-wrapper {
+    flex: 1;
+    text-align: center;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    #question-form-slidenumber {
+      display: inline-block;
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+  #question-form-submit {
+    flex: 0;
+    height: $submit-button-height;
+    a {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+input{
+  background-color: #00cc99;     
+}
+
+.question-div {
+  width: 50%;
+  padding: 5px;
+  right: -40%;
+  position: relative;
+  &:hover {
+    background: #eeeeee;
+  }
+  .question-content {
+  }
+  &:not(:hover) button.delete {
+    background: none;
+  }
+  button.delete {
+    position:absolute;
+    top: 5px;
+    right: 5px;
+  }
+  a.like-button {
+    color: white;
+    :hover {
+      color: white;
+    }
+    i {
+      vertical-align: baseline;
+    }
+  }
+
+
+.cbp_tmtimeline {
+  margin: 40px 0 0 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+
+}
+ 
+}
+
+/* The line */
+.cbp_tmtimeline:before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: -20px;
+  width: 8px;
+  background: #abebc6;
+  left: 31.7%;
+  margin-left: -10px;
+}
+
+.cbp_tmtimeline > li {
+  position: relative;
+}
+
+/* The date/time */
+.cbp_tmtimeline > li .cbp_tmtime {
+  display:block;
+  width: 45%;
+  padding-right: 100px;
+  position: absolute;
+}
+
+.cbp_tmtimeline > li .cbp_tmtime span {
+  display: block;
+  text-align: right;
+}
+
+.cbp_tmtimeline > li .cbp_tmtime span:first-child {
+  font-size: 0.6em;
+  color: #bdd0db;
+}
+
+.cbp_tmtimeline > li .cbp_tmtime span:last-child {
+  font-size: 1.2em;
+  color: #239b56;
+}
+
+.cbp_tmtimeline > li:nth-child(odd) .cbp_tmtime span:last-child {
+  color: #239b56;
+}
+
+/* Right content */
+.cbp_tmtimeline > li .cbp_tmlabel {
+  margin: -30px 10px -10px 40%;
+  background: #28B463;
+  color: #fff;
+  padding: 2.7em;
+  font-size: 0.8em;
+  font-weight: 10;
+  position: relative;
+  border-radius: 7px;
+  overflow-wrap: break-word;
+
+}
+
+.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel {
+  background: #2ECC71;
+}
+
+.cbp_tmtimeline > li .cbp_tmlabel h2 { 
+  margin-top: -15px;
+  padding: 5px 0 5px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+}
+
+
+
+/* The triangle */
+.cbp_tmtimeline > li .cbp_tmlabel:after {
+  right: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-right-color: #28B463;
+  border-width: 10px;
+  top: 10px;
+}
+
+.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
+  border-right-color: #2ECC71;
+
+}
+
+/* The icons */
+.cbp_tmtimeline > li .cbp_tmicon {
+  width: 25px;
+  height: 25px;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-size: 0.5em;
+  line-height: 40px;
+  position: absolute;
+  background: white;
+  border-radius: 100%;
+  box-shadow: 0 0 0 5px #abebc6;
+  left: 33.5%;
+  top: 10px;
+  margin: 0 0 0 -25px;
+
+}
+
+/* Example Media Queries */
+@media screen and (max-width: 65.375em) {
+
+  .cbp_tmtimeline > li .cbp_tmtime span:last-child {
+    font-size: 1.5em;
+  }
+}
+
+@media screen and (max-width: 47.2em) {
+  .cbp_tmtimeline:before {
+    display: none;
+  }
+
+  .cbp_tmtimeline > li .cbp_tmtime {
+    width: 100%;
+    position: relative;
+    padding: 0 0 20px 0;
+  }
+
+  .cbp_tmtimeline > li .cbp_tmtime span {
+    text-align: left;
+  }
+
+  .cbp_tmtimeline > li .cbp_tmlabel {
+    margin: 0 0 30px 0;
+    padding: 1em;
+    font-weight: 400;
+    font-size: 95%;
+
+  }
+
+  .cbp_tmtimeline > li .cbp_tmlabel:after {
+    right: auto;
+    left: 20px;
+    border-right-color: transparent;
+    border-bottom-color: #3594cb;
+    top: -20px;
+  }
+
+  .cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
+    border-right-color: transparent;
+    border-bottom-color: #6cbfee;
+
+  }
+
+  .cbp_tmtimeline > li .cbp_tmicon {
+    position: relative;
+    left: auto;
+    margin: -55px 5px 0 0px;
+
+  } 
+}
+
+
+@import 'feedback';
+@import 'slide';
+@import 'script';

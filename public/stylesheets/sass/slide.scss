@@ -1,0 +1,31 @@
+#slide-container {
+    position: relative;
+    .reveal {
+        .sl-block {
+            display: block;
+            position: absolute;
+            z-index: auto;
+        }
+        div {
+            font-size: 30px;
+        }
+        .controls {
+            position: absolute;
+        }
+        .progress {
+            position: absolute;
+            margin-bottom: 0;
+        }
+    }
+    #slide-subcontainer {
+        width: 100%;
+        height: 100%;
+    }
+    #sync-button {
+        position: absolute;
+        right :10px;
+        top: 10px;
+        color: white;
+    }
+}
+

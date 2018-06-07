@@ -1,0 +1,6 @@
+node_modules
+.vscode/*
+
+public/stylesheets/*.css
+npm-debug.log
+public/lib/reveal/css/theme/bulma.css

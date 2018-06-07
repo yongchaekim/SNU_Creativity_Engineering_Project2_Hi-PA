@@ -1,0 +1,13 @@
+
+#alert-container {
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    right: 60;
+    width: 50%;
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: right;
+}
+
+@import 'alert'

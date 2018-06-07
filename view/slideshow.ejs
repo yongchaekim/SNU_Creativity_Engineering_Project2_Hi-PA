@@ -1,0 +1,67 @@
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>HiPA - Presentation Assistant</title>
+
+    <!-- Import a dependent file -->
+    <script src="public/lib/jquery/jquery-3.2.0.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Import a hifive framework -->
+    <link type="text/css" rel="stylesheet" href="public/lib/h5/h5.css">
+    <script src="public/lib/h5/ejs-h5mod.js"></script>
+    <script src="public/lib/h5/h5.dev.js"></script>
+
+    <!-- Import reveal.js fremework -->
+    <link rel="stylesheet" href="public/lib/reveal/css/reveal.css">
+    <link rel="stylesheet" href="public/lib/reveal/css/theme/bulma.css">
+    <script src="public/lib/reveal/lib/js/head.min.js"></script>
+    <script src="public/lib/reveal/js/reveal.js"></script>
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="public/lib/reveal/lib/css/zenburn.css">
+    <!-- Import css framework -->
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="public/lib/tipped-4.6.0-light/css/tipped/tipped.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="public/lib/reveal/lib/css/zenburn.css">
+
+
+    <script src="public/lib/tipped-4.6.0-light/js/tipped/tipped.js"></script>
+
+    <script src="public/javascripts/config-slideshow.js"></script>
+    <!-- hifive model -->
+
+    <!-- hifive logic -->
+
+    <!-- hifive controller -->
+    <script src="public/javascripts/controller/SlideController.js"></script>
+    <script src="public/javascripts/controller/AlertController.js"></script>
+    <script src="public/javascripts/controller/SlideshowController.js"></script>
+    <script>
+      var parentController = null;
+      $(function() {
+        parentController = h5.core.controller('body', hipa.controller.SlideshowController);
+      });
+    </script>
+
+    <link type="text/css" rel="stylesheet" href="public/stylesheets/main_slideshow.css">
+  </head>
+  <body>
+
+  
+    <div id="slide-container">
+      <div id="slide-subcontainer">
+      </div>
+    </div>
+
+
+    <div id="alert-container">
+      <div id="talkingballoon-container">
+      </div>
+    </div>
+  </body>
+</html>

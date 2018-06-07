@@ -1,0 +1,127 @@
+
+
+@import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+
+body {
+	font-family: 'Lato';
+	background-color: #f0f0f0;
+	margin: 0px auto;
+	max-width: 1150px;
+}
+
+#main{
+  text-align: center;
+}
+#head{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#info {
+  font-size: 20px;
+}
+#headline {
+  text-decoration: none
+}
+#results {
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #ddd;
+  padding: 15px;
+  text-align: left;
+  min-height: 200px;
+}
+.interim {
+  color: gray;
+}
+.final {
+  color: black;
+  padding-right: 3px;
+}
+#buttons {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+#buttons button{
+  width: 100px;
+  height: 50px;
+}
+
+/**/
+
+#overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	-o-transform : scaleX(-1);
+	-webkit-transform : scaleX(-1);
+	transform : scaleX(-1);
+	-ms-filter : fliph; /*IE*/
+	filter : fliph; /*IE*/
+}
+
+#videoel {
+	-o-transform : scaleX(-1);
+	-webkit-transform : scaleX(-1);
+	transform : scaleX(-1);
+	-ms-filter : fliph; /*IE*/
+	filter : fliph; /*IE*/
+}
+
+#content {
+	position : relative;
+	width : 370px;
+}
+
+#container-face, #content {
+	margin-left : auto;
+	margin-right : auto;
+  text-align: center;
+}
+
+#sketch {
+	display: none;
+}
+
+#filter {
+	display: none;
+}
+
+h2 {
+	font-weight : 400;
+}
+
+.nogum {
+	display : none;
+}
+
+#gum, #nogum {
+  font-weight: bold;
+}
+
+.btn {
+	font-family: 'Lato';
+	font-size: 16px;
+}
+
+.hide {
+	display : none;
+}
+
+.nohide {
+	display : block;
+}
+
+#footer img {
+  height: 100px;
+  margin: 10px;
+}
+
+#results span:hover{
+  background-color: yellow;
+}
+
+#tooltip-results a{
+  text-decoration: underline;
+}

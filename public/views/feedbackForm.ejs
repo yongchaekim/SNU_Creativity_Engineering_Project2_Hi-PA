@@ -1,0 +1,26 @@
+<script type="text/ejs" id="feedbackForm">
+<div id="feedback-subcontainer">
+    <div class="feedback-speed-container">
+        <img src="/public/assets/speech_icon.svg" class="feedback-icon">
+        <div class="feedback-btn-container">
+            <a class="button is-info [%= (speed !== 1 ? 'is-outlined' : '') %] feedback-speed" sign="+1">
+                Fast
+            </a>
+            <a class="button is-info [%= (speed !== -1 ? 'is-outlined' : '') %] feedback-speed" sign="-1">
+                Slow
+            </a>
+        </div>
+        </div>
+    <div class="feedback-volume-container">
+        <img src="/public/assets/volume_icon.svg" class="feedback-icon">
+        <div class="feedback-btn-container">
+            <a class="button is-info [%= (volume !== 1 ? 'is-outlined' : '') %] feedback-volume" sign="+1">
+                Loud
+            </a>
+            <a class="button is-info [%= (volume !== -1 ? 'is-outlined' : '') %] feedback-volume" sign="-1">
+                Small
+            </a>
+        </div>
+    </div>
+</div>
+</script>

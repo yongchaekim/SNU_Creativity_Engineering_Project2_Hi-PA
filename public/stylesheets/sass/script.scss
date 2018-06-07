@@ -1,0 +1,66 @@
+#script-container {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+}
+#script-control, #script-result, #script-face {
+  margin-left: 1%;
+  margin-bottom: 1%;
+}
+#script-box {
+  margin: 0;
+}
+#script-control {
+  margin-top: 1%;
+  height: 10%;
+  button, #time_info {
+    float: left;
+    margin-right: 5px;
+  }
+}
+#script-result {
+  overflow: scroll;
+  border: #00d1b2 solid;
+  float: left;
+  width: 70%;
+  height: 80%;
+}
+#tooltip-results {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+#script-face {
+  margin-right: 1%;
+  float: right;
+  width: 27%;
+  text-align: center;
+}
+#script-face video, #script-face canvas {
+  width: 100%;
+}
+#script-face canvas {
+  position: relative;
+  transform: translateY(-100%);
+}
+#script-face #content div {
+  display: none;
+}
+#results span:hover{
+  background-color: #eeeeee;
+}
+#tooltip-results {
+  display: none;
+  z-index: 1000;
+  border: #00d1b2 solid;
+  background-color: #ffffff;
+  font-size: 10pt;
+  button {
+    float: right;
+    font-size: 8pt;
+  }
+}
+#tooltip-results a, #tooltip-close{
+  text-decoration: underline;
+}

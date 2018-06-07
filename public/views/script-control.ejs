@@ -1,0 +1,39 @@
+<script type="text/ejs" id="script-control">
+  <div id="info">
+    <p id="info_start">
+      Click on START button and begin speaking.
+    </p>
+    <p id="info_speak_now" style="display:none">
+      Speak now.
+    </p>
+    <p id="info_no_speech" style="display:none">
+      No speech was detected. You may need to adjust your <a href=
+      "//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a>.
+    </p>
+    <p id="info_no_microphone" style="display:none">
+      No microphone was found. Ensure that a microphone is installed and that
+      <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+      microphone settings</a> are configured correctly.
+    </p>
+    <p id="info_allow" style="display:none">
+      Click the "Allow" button above to enable your microphone.
+    </p>
+    <p id="info_denied" style="display:none">
+      Permission to use microphone was denied.
+    </p>
+    <p id="info_blocked" style="display:none">
+      Permission to use microphone is blocked. To change, go to
+      chrome://settings/contentExceptions#media-stream
+    </p>
+    <p id="info_upgrade" style="display:none">
+      Web Speech API is not supported by this browser. Upgrade to <a href=
+      "//www.google.com/chrome">Chrome</a> version 25 or later.
+    </p>
+  </div>
+  <div id="buttons">
+      <button id="start_button">wait, loading video</button>
+      <button id="pause_button" disabled="true">wait, loading video</button>
+      <button id="stop_button" disabled="true">wait, loading video</button>
+      <div id="time_info"></div>
+  </div>
+</script>

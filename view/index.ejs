@@ -1,0 +1,322 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>HiPA - Presentation Assistant</title>
+      
+    <!--Importing bootstrap -->
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Import a dependent file -->
+    <script src="/public/lib/jquery/jquery-3.2.0.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Import a hifive framework -->
+    <link type="text/css" rel="stylesheet" href="/public/lib/h5/h5.css">
+    <script src="/public/lib/h5/ejs-h5mod.js"></script>
+    <script src="/public/lib/h5/h5.dev.js"></script>
+
+    <!-- Import reveal.js fremework -->
+    <link rel="stylesheet" href="/public/lib/reveal/css/reveal.css">
+    <link rel="stylesheet" href="/public/lib/reveal/css/theme/bulma.css">
+    <script src="/public/lib/reveal/lib/js/head.min.js"></script>
+    <script src="/public/lib/reveal/js/reveal.js"></script>
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="/public/lib/reveal/lib/css/zenburn.css">
+    <!-- Import css framework -->
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/public/lib/tipped-4.6.0-light/css/tipped/tipped.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="/public/lib/reveal/lib/css/zenburn.css">
+
+
+    <script src="/public/lib/tipped-4.6.0-light/js/tipped/tipped.js"></script>
+    <!-- clmtrckr -->
+    <% if (isPresenter) { %>
+      <script src="/public/lib/clmtrackr/b4_demo.js"></script>
+      <script src="/public/lib/clmtrackr/utils.js"></script>
+      <script src="/public/lib/clmtrackr/numeric-1.2.6.min.js"></script>
+      <script src="/public/lib/clmtrackr/mosse.js"></script>
+      <script src="/public/lib/clmtrackr/jsfeat-min.js"></script>
+      <script src="/public/lib/clmtrackr/frontalface.js"></script>
+      <script src="/public/lib/clmtrackr/jsfeat_detect.js"></script>
+      <script src="/public/lib/clmtrackr/left_eye_filter.js"></script>
+      <script src="/public/lib/clmtrackr/right_eye_filter.js"></script>
+      <script src="/public/lib/clmtrackr/nose_filter.js"></script>
+      <script src="/public/lib/clmtrackr/models/model_pca_20_svm.js"></script>
+      <script src="/public/lib/clmtrackr/clm.js"></script>
+      <script src="/public/lib/clmtrackr/svmfilter_webgl.js"></script>
+      <script src="/public/lib/clmtrackr/svmfilter_fft.js"></script>
+      <script src="/public/lib/clmtrackr/mossefilter.js"></script>
+      <script src="/public/lib/clmtrackr/Stats.js"></script>
+    <% } %>
+
+    <% if (isPresenter) { %>
+      <script src="/public/javascripts/config-presenter.js"></script>
+    <% } else { %>
+      <script src="/public/javascripts/config-audience.js"></script>
+    <% } %>
+    <!-- hifive model -->
+    <script src="/public/javascripts/model/QuestionDataModel.js"></script>
+    <!-- hifive logic -->
+    <script src="/public/javascripts/logic/QuestionListLogic.js"></script>
+    <script src="/public/javascripts/logic/ScriptLogic.js"></script>
+    <script src="/public/javascripts/logic/TimeLogic.js"></script>
+    <!-- hifive controller -->
+    <script src="/public/javascripts/controller/QuestionListController.js"></script>
+    <script src="/public/javascripts/controller/SlideController.js"></script>
+    <script src="/public/javascripts/controller/ScriptController.js"></script>
+    <script src="/public/javascripts/controller/TooltipController.js"></script>
+    <script src="/public/javascripts/controller/FeedbackController.js"></script>
+    <script src="/public/javascripts/controller/TimeController.js"></script>
+    <script src="/public/javascripts/controller/AlertController.js"></script>
+    <script src="/public/javascripts/controller/PageController.js"></script>
+    <script>
+      var parentController = null;
+      $(function() {
+        parentController = h5.core.controller('body', hipa.controller.PageController);
+      });
+    </script>
+
+    <link type="text/css" rel="stylesheet" href="/public/stylesheets/main.css">
+
+    
+    <style>
+        #chat{
+          background-color: white;
+        height:300px;
+            margin:auto;
+          position: relative;
+          overflow-y: scroll;
+          border-style: solid;
+          border-color: grey;
+          border-width:1px;
+        }
+      form{
+          background-color: white;
+          bottom: 270px;
+          right: 390px;
+          
+      }
+      .form-group{  
+          background-color: white;
+         
+        }
+      .form-control{
+          height: 30px;
+          position: relative;
+          border-color:grey;
+          border-style:solid;
+          border-width:1px;
+      }
+      .Onlineusers{
+        left: 20px;
+        position: relative;
+        }
+      .list-group{
+        overflow-y: scroll;
+        height: 50px;
+        border-style: solid;
+        border-color: grey;
+        border-width:1px;
+        position:relative;
+      }
+      #Onlineusers{
+        display: none;
+      }
+      #minichat{
+        display: none;
+      }   
+      #profile-button{
+        right: -90px;
+        position: relative;
+      }
+
+
+    </style>
+
+  </head>
+  <body>
+
+ 
+        
+      <div class="row">
+        <div class="col-lg-9">
+            <div id="slide-container">
+                <div id="slide-subcontainer" class="sl-root decks export loaded ua-phantomjs reveal-viewport theme-font-montserrat theme-color-white-blue">
+                </div>
+            </div>
+            
+            <div id="script-container">
+                <div id="script-control"></div>
+                <div id="script-box">
+                    <div id="script-result"></div>
+                    <div id="script-face"></div>
+                </div>
+            </div>
+        </div>
+        
+         <div> <div id = "profile-button">
+  <a href="/profile"><input type="submit" class="btn btn-primary" value="Go to Profile" id = "profile-button"/></a>
+    </div>
+    <div>
+        
+        <div class="col-lg-3">   
+            <div class="container">
+        <div id="userFormArea" class="row">
+          <div class="col-md-12">
+            <form id="userForm">
+              <div class="form-group">
+                <label>Enter Username</label>
+                <p id="duplicatename"></p>
+                <textarea class="form-control" id="username"></textarea>
+                <br />
+                <input type="submit" class="btn btn-primary" value="Login" id = "login-button"/>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+
+        <div id="Onlineusers">
+        <h3>Online Users</h3>
+              <ul class="list-group" id="users"></ul>
+          </div>
+        
+          
+      <div id="minichat" >
+        <div style=" border-style:solid; border-color:grey; height: 250px; right: 0px; position:relative; width: 270px; overflow-y: scroll;" id="txtarea">
+   
+        <dl id="txtappend">
+        </dl>
+      </div>
+
+      <br />
+      <textarea  class="form-control" style="bottom: 0px; height: 60px;  width: 270px; right: 0px; position:relative;" type="text" id="txt"></textarea>
+      <input id="btn" style="width: 270px; bottom: -10px; height: 40px; right:0px; position:relative;" type="submit"  class="btn btn-primary" value="Enter Message" />
+      <button id = "gotoTimeline" style="width: 270px; bottom: -25px; height: 40px; right:3px; position:relative;" onclick="gotoTimeline()" class="btn btn-primary" >Back to timeline</button>
+      </div>
+
+        
+
+            <div id="question-container">
+                <div id="question-list-container">
+                </div>
+                <div id="question-form-container">
+                </div>
+            </div>      
+            <div id="feedback-container">
+      </div>
+        </div>
+     </div>
+
+      
+
+      <script>
+      $(document).ready(function(){
+          $('#0').click(function(){
+          });
+      });
+
+    <script src="http://code.jquery.com/jquery-latest.min.js">
+    </script>
+    <script src="/socket.io/socket.io.js"></script> 
+          <script>
+        var socket = io.connect();
+        var $messageForm = $('#messageForm');
+        var $message = $('#message');
+        var $chat = $('#chat');
+        
+        var $userFormArea = $('#userFormArea');
+        var $userForm = $('#userForm');
+        var $users = $('#users');
+        var $username = $('#username');
+        var $duplicatename = $('#duplicatename');
+        var $Onlineusers = $('#Onlineusers');
+        var $minichat = $('#minichat');
+        
+        
+      
+      var variable;
+
+      function testMethod(click_id){
+      var $messageArea = $('#messageArea'); 
+        variable = click_id;
+
+         socket.emit('join', {'roomname': click_id});
+   
+          socket.once('join', function(data){
+
+          for(i = 0; i < data.length; i++)
+          {
+              $('#txtappend').append('<dd style="margin: 0px;">'+ data[i] + '</dd>');
+          }
+              $('#feedback-container').hide(500);
+              $('#question-container').hide(500);
+              $minichat.show(500);
+              $Onlineusers.show(500);
+              
+            });
+          }
+
+
+        function gotoTimeline(){    
+
+          socket.emit('leave chat', {'roomname': variable});
+          socket.once('leave chat', function(data){
+
+          $('#question-container').show(500);
+                 $Onlineusers.hide(500);
+                 $('#feedback-container').show(500);
+                 $minichat.hide(500);
+                  $('#txtappend').empty();
+            });    
+        }    
+
+
+         $(function(){
+             $('#btn').click(function(e){
+            e.preventDefault();
+
+            socket.emit('message', {'message': $('#txt').val(), 'roomname': variable});
+            $('#txt').val('');
+            });
+
+          socket.on('message', function(data){
+
+            $('#txtappend').append('<dd style="margin: 0px;">'+ data.user + ': ' +  data.msg + '</dd>');
+                 });
+            });
+
+
+        $userForm.submit(function(e){
+          e.preventDefault();
+          socket.emit('new user', $username.val(), function(data){
+            if(data){
+              $userFormArea.hide(200);
+              $Onlineusers.hide(200);
+               $('#question-container').show(500);
+                $('#feedback-container').show(500);
+            }else{
+              $duplicatename.html('<b>'+'Sorry can not use a duplicate name that is already in the onlinelist.'+'</b>');
+            }
+          });
+          $username.val('');
+        });
+          socket.on('get users', function(data){
+            var html = '';
+            for(i = 0; i < data.length; i++){
+              html += '<li class="list-group-item">'+data[i]+'</li>';
+              }
+              $users.html(html);
+          });
+
+      </script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<script type="text/ejs" id="questionList">
+<!--{h5view id="question-list"}
+<div id="question-list" data-h5-loop-context="questionList">
+ 
+<div class="question-div" data-h5-bind="attr(question-id):id">
+
+<ul class="cbp_tmtimeline">
+    <li>
+    <time class="cbp_tmtime" datetime="2013-04-10 18:30">
+        <span>4/10/13</span> <small><span data-h5-bind="timeString"></span> </small></time>
+    <div class="cbp_tmicon "></div>
+    <div class="cbp_tmlabel">
+
+      <h2>User: <span data-h5-bind="nicknameValue"></span></h2>
+      <p>Q2 <medium><span data-h5-bind="slideNumberText"></span></medium>: <span data-h5-bind="question"></span></p>
+       <p>
+       
+        <a class="like-button">
+          <i class="fa fa-heart-o" aria-hidden="true" data-h5-bind="attr(class):likeBtnClass"></i>
+        </a>
+        <span data-h5-bind="like"></span>
+
+      </p>
+
+      <div id="chatopen">
+
+      <button id="openchat" onclick="testMethod(this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('question-id'));" >openchat</button>
+      </div>
+
+
+       
+
+
+      <button class="delete"></button>
+    </div>
+
+   
+
+
+  </li>
+  </ul>
+</div>
+</div>
+
+-->
+<div class="modal" id="delete-question-dialog">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title"></p>
+      <button class="delete"></button>
+    </header>
+    <section class="modal-card-body">
+      Password
+      <input class="input" type="password" name="question_password">
+    </section>
+    <footer class="modal-card-foot">
+      <a id="delete-question-btn" class="button is-danger">Delete Question</a>
+      <a id="delete-question-cancel-btn" class="button">Cancel</a>
+    </footer>
+  </div>
+</div>
+  
+
+</script>
+
