@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>delete</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/main.css">
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+      $( "#form4" ).submit(function(event) {
+        event.preventDefault();
+
+        $.ajax({
+          type: 'POST',
+          url: '/delete',
+          data: $('#form4').serialize(),
+          dataType: "json",
+          success: function(response){
+            //alert("a");
+            //console.log(response.Success);
+            $('#form4')[0].reset();
+
+            document.getElementById("check").innerHTML=response.Success;
+                  //ADD THIS CODE
+                  setTimeout(function(){
+                    document.getElementById("check").innerHTML="";
+                  },3000);
+                  if (response.Success=="Successfully deleted account!") {
+                    document.getElementById("aa").click();
+                  };
+                },
+                error: function() {
+                }
+              })
+      });
+
+    });
+  </script>
+</head>
+<body>
+
+  <div class="col-md-4 col-md-offset-4">
+    <div>
+    <h3>Presentation Assistant System </h3>
+      <p>Delete Account</p>
+    </div>
+    <div class="form-group">
+      <form id="form4" method="post" >
+        <input type="text" name="email" placeholder="E-mail" required="" class="form-control"><br/>
+        <input type="password" name="password" placeholder="Password" required="" class="form-control"><br/>
+        <input type="submit" value="delete" class="btn btn-success">
+      </form>
+    </div>
+
+    <div class="mssg bg-danger">
+      <span id="check" ></span>
+    </div>
+    
+    <div><span>Go back to Registration form?</span><a href="/">click here</a>
+    </div>
+   
+  </div>
+
+</body>
+</html>

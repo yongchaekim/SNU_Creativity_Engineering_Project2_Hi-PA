@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auth</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/main.css">
+
+
+ <script type="text/javascript">
+    $(document).ready(function(){
+
+      $( "#form3" ).submit(function(event) {
+        event.preventDefault();
+
+        $.ajax({
+          type: 'POST',
+          url: '/invitation',
+          data: $('#form3').serialize(),
+          dataType: "json",
+          success: function(response){
+            //alert("a");
+            //console.log(response.Success);
+            $('#form3')[0].reset();
+
+            document.getElementById("check").innerHTML=response.Success;
+                  //ADD THIS CODE
+                  setTimeout(function(){
+                    document.getElementById("check").innerHTML="";
+                  },3000);
+                  if (response.Success=="Invitation successfully sent") {
+                    document.getElementById("aa").click();
+                  };
+                },
+                error: function() {
+                }
+              })
+      });
+
+    });
+  </script>
+</head>
+<body>
+
+<div class="col-md-4 col-md-offset-4">
+<h3>Presentation Assistant System </h3>
+<p>Invite users to our system</p>
+<div class="form-group">
+        <form id="form3" method="post">
+          <input type="email" name="email" placeholder="E-mail" required="" class="form-control"><br/>
+            <textarea type="message" name="message" placeholder="Message" rows="5" class="form-control"></textarea><br/>
+        
+            <input type="submit" value="Send" class="btn btn-success">
+
+        </form>
+
+        </div>
+          <div  class="mssg bg-danger">
+        <span id="check"></span>
+      </div>
+      <div id="LangTable"><a href="/login" id="aa"></a>
+      </div>
+       <div><span>Go back to Registration form?</span><a href="/">click here</a>
+    </div>
+        </div>
+        </body>
+</html>

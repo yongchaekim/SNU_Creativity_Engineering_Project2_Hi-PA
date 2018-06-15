@@ -219,7 +219,7 @@ var scriptController = {
       
       if(state=="answer"){
           
-          document.getElementById("message").value += " "+item;
+          document.getElementById("txt").value += " "+item;
       }
       
       if (pipe[3]=="assistant" & pipe[4]=="next"){
@@ -268,7 +268,7 @@ var scriptController = {
       }
       
       if(pipe[2]=="assistant" & pipe[3]=="link"){
-          var value = document.getElementById("message").value;
+          var value = document.getElementById("txt").value;
           
           var words = value.split(" ");
           var n = words.length;
@@ -279,14 +279,14 @@ var scriptController = {
           }
           
     
-          document.getElementById("message").value = value;
+          document.getElementById("txt").value = value;
           
-          document.getElementById("message").value += " <a href=\""+pipe[4]+"\">" +pipe[4]+"</a> ";
+          document.getElementById("txt").value += " <a href=\""+pipe[4]+"\">" +pipe[4]+"</a> ";
       }
       
       if(pipe[2]=="assistant" & pipe[3]=="delete"){
           var delete_n = parseInt(pipe[4])+3;
-          var value = document.getElementById("message").value;
+          var value = document.getElementById("txt").value;
           
           var words = value.split(" ");
           var n = words.length;
@@ -297,7 +297,7 @@ var scriptController = {
           }
           
     
-          document.getElementById("message").value = value;
+          document.getElementById("txt").value = value;
       }
       
       if(pipe[3]=="assistant" & pipe[4]=="send"){
@@ -312,10 +312,10 @@ var scriptController = {
           }
           
     
-          document.getElementById("message").value = value;
+          document.getElementById("txt").value = value;
           
-          var el=document.getElementById('messageForm');
-          var etype='submit';
+          var el=document.getElementById('btn');
+          var etype='click';
           if (el.fireEvent) {
             el.fireEvent('on' + etype);
           } else {
