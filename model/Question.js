@@ -9,6 +9,7 @@ var questionSchema = new Schema({
     question : { type : String, required : true },
     nickname : String,
     password : { type : String, required : true },
+    timeline_flags : String,
     like : { type : Number, default : 0 },
     time : { type : Date, default : Date.now }
 });

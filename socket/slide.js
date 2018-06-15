@@ -8,11 +8,15 @@ var question = require('./question');
 var Question = require('../model/Question');
 var tooltip = require('./tooltip');
 var slide = {};
+var User = require('../model/user');
+var express = require('express');
+var router = express.Router();
 
 slide.audience = io.of('/socket/slide/audience');
 slide.audience.on('connection', function(socket) {
     console.log('client connected to slides');
     socket.on('disconnect', function(socket) {
+    
         console.log('client disconnected out slides');
     });
 
@@ -31,6 +35,7 @@ slide.presenter.on('connection', function(socket) {
     console.log('presenter connected to slides');
 
     socket.on('disconnect', function(socket) {
+ 
         console.log('presenter disconnected out slides');
     });
 

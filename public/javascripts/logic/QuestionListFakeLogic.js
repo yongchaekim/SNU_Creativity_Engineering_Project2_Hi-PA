@@ -19,7 +19,7 @@ var questionListLogic = {
     return dfd.promise();
   },
 
-  add: function(question, nickname, slideNumber, password) {
+  add: function(question, nickname, slideNumber, password, timeline_flags) {
     var dfd = this.deferred();
     setTimeout(() => {
       const tmpQuestion = {
@@ -27,6 +27,7 @@ var questionListLogic = {
         question,
         nickname,
         slideNumber,
+        timeline_flags,
         time: Date.now(),
       }
       // FIXME: consider the case where question being created twice.

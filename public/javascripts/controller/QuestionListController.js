@@ -1,7 +1,7 @@
 var controller = {
     __name: 'hipa.controller.QuestionListController',
 
-    __templates: ['/public/views/questionList.ejs', '/public/views/questionForm.ejs'],
+    __templates: ['/public/views/questionList.ejs', '/public/views/questionForm.ejs', '/public/views/questionFormpresenter.ejs'],
 
     questionListLogic: hipa.logic.QuestionListLogic,
     questionDataModel: hipa.data.QuestionDataModel,
@@ -32,6 +32,7 @@ var controller = {
       //const indicator = this.triggerIndicator();
       //indicator.show();
       this.view.update('#question-list-container', 'questionList', null);
+ 
 
       this.questionListLogic.getQuestionList().done((questionList)=>{
         this.view.bind( 'h5view#question-list', {
@@ -39,11 +40,19 @@ var controller = {
         });
       });
 
+
+     this.view.update('#question-form-container-presenter', 'questionFormpresenter', null);
+
+
       this.view.update('#question-form-container', 'questionForm', null);
     },
 
     '#question-submit-btn click': function() {
       this._submitForm();
+    },
+
+    '#question-submit-btn-presenter click': function() {
+      this._submitFormPresenter();
     },
 
      _getQuestionId: function($el) {
@@ -55,12 +64,36 @@ var controller = {
       const $password = this.$find('#question-form input[name=password]');
       const $isSlideNumberIncluded = this.$find('#question-form input[name=current_slide]');
       const $question = this.$find('#question-form textarea[name=question]');
+      const timeline_flags = 'audience';
+      const isSlideNumberIncluded = $isSlideNumberIncluded.prop('checked');
+      const slideNumberValue = Reveal.getState().indexh;
+      const slideNumber = isSlideNumberIncluded ? slideNumberValue : null;
+
+      this.questionListLogic.add($question.val(), $nickname.val(), slideNumber, $password.val(), timeline_flags).done(() => {
+        $nickname.val(null);
+        $isSlideNumberIncluded.prop('checked', false);
+        $question.val(null);
+        $password.val(null);
+
+      }).fail(() => {
+        alert('failed to add question');
+      });
+
+      return false;
+    },
+
+    _submitFormPresenter: function() {
+      const $nickname = this.$find('#question-form-presenter input[name=nickname]');
+      const $password = this.$find('#question-form-presenter input[name=password]');
+      const $isSlideNumberIncluded = this.$find('#question-form-presenter input[name=current_slide]');
+      const $question = this.$find('#question-form-presenter textarea[name=question]');
+      const timeline_flags = 'presenter';
 
       const isSlideNumberIncluded = $isSlideNumberIncluded.prop('checked');
       const slideNumberValue = Reveal.getState().indexh;
       const slideNumber = isSlideNumberIncluded ? slideNumberValue : null;
 
-      this.questionListLogic.add($question.val(), $nickname.val(), slideNumber, $password.val()).done(() => {
+      this.questionListLogic.add($question.val(), $nickname.val(), slideNumber, $password.val(), timeline_flags).done(() => {
         $nickname.val(null);
         $isSlideNumberIncluded.prop('checked', false);
         $question.val(null);

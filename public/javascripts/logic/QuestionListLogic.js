@@ -22,12 +22,12 @@ var questionListLogic = {
     this.questionList.length = 0;
   },
 
-  add: function(question, nickname, slideNumber, password) {
+  add: function(question, nickname, slideNumber, password, timeline_flags) {
     return h5.ajax({
       type: 'POST',
       dataType: 'JSON',
       url: config.url + '/question',
-      data: { question, nickname, slideNumber, password },
+      data: { question, nickname, slideNumber, password , timeline_flags},
     }).then((json) => {
       // FIXME: consider the case where question being created twice.
       // const questionModelItem = this.model.create(json);

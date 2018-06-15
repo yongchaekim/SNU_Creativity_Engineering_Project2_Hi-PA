@@ -1,3 +1,5 @@
+var pipe=["","","","",""];
+var state="";
 
 var scriptController = {
   __name: 'hipa.controller.ScriptController',
@@ -5,7 +7,7 @@ var scriptController = {
 
   recognition: speechRecognition,
   socket: null,
-
+    
   // for mouth recognition
   __mouth_threshold: 0,
   __vid: null,
@@ -196,16 +198,171 @@ var scriptController = {
     this.__start_slide_num = script.startSlide;
     this.__end_slide_num = script.endSlide;
   },
-
+    
+    _make_action: function(el, etype){
+    if (el.fireEvent) {
+        el.fireEvent('on' + etype);
+    } else {
+    var evObj = document.createEvent('Events');
+    evObj.initEvent(etype, true, false);
+    el.dispatchEvent(evObj);
+  }
+},
+    
+  _process_word: function(item,index) {
+    if(item==""){
+        return;
+    }
+    
+    pipe.push(item);
+    pipe.shift();
+      
+      if(state=="answer"){
+          
+          document.getElementById("message").value += " "+item;
+      }
+      
+      if (pipe[3]=="assistant" & pipe[4]=="next"){
+        
+        var e = new Event("keydown");
+        e.keyCode=39;
+        e.which=e.keyCode;
+        e.metaKey=false;
+        e.bubbles=true;
+        document.dispatchEvent(e);
+      }
+      
+      if (pipe[3]=="assistant" & pipe[4]=="previous"){
+        
+        var e = new Event("keydown");
+        e.keyCode=37;
+        e.which=e.keyCode;
+        e.metaKey=false;
+        e.bubbles=true;
+        document.dispatchEvent(e);
+      }
+      
+      if(pipe[1]=="assistant" & pipe[2]=="open" & pipe[3]=="question"){
+          var n = parseInt(pipe[4])-1;
+          var el=document.getElementsByClassName('chat_button')[n];
+          var etype='click';
+          if (el.fireEvent) {
+            el.fireEvent('on' + etype);
+          } else {
+              var evObj = document.createEvent('Events');
+              evObj.initEvent(etype, true, false);
+              el.dispatchEvent(evObj);
+            }
+         }
+      
+      if (pipe[2]=="assistant" &pipe[3]=="go" & pipe[4]=="back"){
+          gotoTimeline();
+      }
+      
+      if(pipe[3]=="assistant" & pipe[4]=="answer"){
+          state = "answer";
+      }
+      
+      if(pipe[3]=="assistant" & pipe[4]=="finish"){
+          state = "";
+      }
+      
+      if(pipe[2]=="assistant" & pipe[3]=="link"){
+          var value = document.getElementById("message").value;
+          
+          var words = value.split(" ");
+          var n = words.length;
+          value="";
+          
+          for (var i = 0; i<n-2;i++){
+              value+=words[i]+" ";
+          }
+          
+    
+          document.getElementById("message").value = value;
+          
+          document.getElementById("message").value += " <a href=\""+pipe[4]+"\">" +pipe[4]+"</a> ";
+      }
+      
+      if(pipe[2]=="assistant" & pipe[3]=="delete"){
+          var delete_n = parseInt(pipe[4])+3;
+          var value = document.getElementById("message").value;
+          
+          var words = value.split(" ");
+          var n = words.length;
+          value="";
+          
+          for (var i = 0; i<n-delete_n;i++){
+              value+=words[i]+" ";
+          }
+          
+    
+          document.getElementById("message").value = value;
+      }
+      
+      if(pipe[3]=="assistant" & pipe[4]=="send"){
+          var value = document.getElementById("txt").value;
+          
+          var words = value.split(" ");
+          var n = words.length;
+          value="";
+          
+          for (var i = 0; i<n-2;i++){
+              value+=words[i]+" ";
+          }
+          
+    
+          document.getElementById("message").value = value;
+          
+          var el=document.getElementById('messageForm');
+          var etype='submit';
+          if (el.fireEvent) {
+            el.fireEvent('on' + etype);
+          } else {
+              var evObj = document.createEvent('Events');
+              evObj.initEvent(etype, true, false);
+              el.dispatchEvent(evObj);
+            }
+          state = "";
+      }
+      
+  },    
+    
+  _process_order: function(order_text){
+      
+      
+//alert(order_text);
+      var order = order_text.split(" "); 
+       
+      order.forEach(this._process_word);
+      
+          
+          
+         
+          
+      
+      
+       
+  },    
+    
   _display_script: function(script){
     var final_span = script.final_span;
     var slide = script.start_slide;
     if (script.start_slide !== script.end_slide) {
       slide += "~" + script.end_slide;
     }
+      
+      
     if (final_span !== '') {
+        var order_text = final_span;
+        if (order_text[order_text.length-1]=="."){
+            order_text = order_text.substr(0,order_text.length-1);
+        }
+        this._process_order(order_text.toLowerCase());
       var spans = final_span.split(" ");
       final_span = "";
+        
+        
       for (var i=0; i<spans.length; i++) {
         var span = spans[i];
         word = span.replace(/\b[-.,()&$#!\[\]{}"']+\B|\B[-.,()&$#!\[\]{}"']+\b/g, "").toLowerCase();
@@ -352,6 +509,5 @@ var scriptController = {
 
 };
 h5.core.expose(scriptController);
-
 
 

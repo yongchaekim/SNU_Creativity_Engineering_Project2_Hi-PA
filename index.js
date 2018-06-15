@@ -2,6 +2,7 @@ var express = require('express');
 var sassMiddleware = require('node-sass-middleware')
 var bodyParser = require('body-parser');
 
+
 var app = express();
 var server;
 //https
@@ -117,21 +118,26 @@ io.sockets.on('connection', function(socket){
             
             var usrobj = {
                 'room': data.roomname,
-                'name': socket.username
+                'name': data.username
                 };
 
             store[data.roomname] = usrobj;
             idstore[socket.id] = {'id': data.roomname};
             socket.join(data.roomname);
             io.to(store[data.roomname].room).emit('join', chathistory[data.roomname]);
+
+            socket.username = data.username;
+        users[socket.username] = socket;
+     
+            io.to(store[data.roomname].room).emit('get users', Object.keys(users));
             console.log(data);       
         });
 
     //message
     socket.on('message', function(message){
-            chathistory[message.roomname].push(socket.username + ': ' + message.message);
+            chathistory[message.roomname].push(message.username + ': ' + message.message);
             console.log(chathistory[message.roomname]);
-            io.to(store[message.roomname].room).emit('message', {msg: message.message, user: socket.username});
+            io.to(store[message.roomname].room).emit('message', {msg: message.message, user: message.username});
     });
 
     socket.on('leave chat', function(data){
@@ -140,10 +146,13 @@ io.sockets.on('connection', function(socket){
           
           io.to(_roomid).emit('leave chat', {
             id: idstore[socket.id].id,
-            name: socket.username,
+            name: data.username,
             text: 'left the chat'
                 });
                 socket.leave(_roomid);
+          
+          delete users[socket.username];
+          io.to(store[data.roomname].room).emit('get users', Object.keys(users));
           delete idstore[socket.id];
 
           console.log('left the chat');
@@ -152,27 +161,11 @@ io.sockets.on('connection', function(socket){
     }); 
     //Disconnect
     socket.on('disconnect', function(data){
-        if(!socket.username) return;
-        delete users[socket.username];
-        updateUsernames();
+   
     });
     //New user
-    socket.on('new user', function(data, callback){
-        if(data in users){
-            console.log('gave me error');
-            callback(false);
-        }else{
-        console.log(data);
-        callback(true);
-        socket.username = data;
-        users[socket.username] = socket;
-        updateUsernames();
-        }
-    });
 
-    function updateUsernames(){
-        io.sockets.emit('get users', Object.keys(users));
-    }
+
     
 });
 
@@ -199,6 +192,8 @@ app.use(session({
     mongooseConnection: dblog
   })
 }));
+
+
 
 var index = require('./routes/index');
 app.use('/', index);

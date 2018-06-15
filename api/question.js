@@ -1,6 +1,7 @@
 var express = require('express');
 var Question = require('../model/Question');
 var router = express.Router();
+var User = require('../model/user');
 
 function _getQuestion(req, res) {
     Question.find({}, function (err, results) {
@@ -9,6 +10,7 @@ function _getQuestion(req, res) {
 }
 
 function _postQuestion(req, res, next) {
+
     var q = new Question(req.body);
     q.save((err, book) => {
         if (err) {

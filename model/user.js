@@ -6,6 +6,7 @@ userSchema = new Schema({
 	email: String,
 	username: String,
 	password: String,
+	access_flags: Number,
 	passwordConf: String
 }),
 

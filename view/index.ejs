@@ -133,7 +133,7 @@
         display: none;
       }   
       #profile-button{
-        right: -90px;
+        right: -225px;
         position: relative;
       }
 
@@ -162,30 +162,16 @@
         </div>
         
          <div> <div id = "profile-button">
-  <a href="/profile"><input type="submit" class="btn btn-primary" value="Go to Profile" id = "profile-button"/></a>
+  <a href="/logout"><input type="submit" class="btn btn-primary" value="logout" id = "Logout"/></a>
     </div>
     <div>
         
         <div class="col-lg-3">   
             <div class="container">
-        <div id="userFormArea" class="row">
-          <div class="col-md-12">
-            <form id="userForm">
-              <div class="form-group">
-                <label>Enter Username</label>
-                <p id="duplicatename"></p>
-                <textarea class="form-control" id="username"></textarea>
-                <br />
-                <input type="submit" class="btn btn-primary" value="Login" id = "login-button"/>
-              </div>
-            </form>
-          </div>
-        </div>
-
-
+       
 
         <div id="Onlineusers">
-        <h3>Online Users</h3>
+        <h3>Online Room Users</h3>
               <ul class="list-group" id="users"></ul>
           </div>
         
@@ -198,21 +184,35 @@
       </div>
 
       <br />
+      <form id="messageForm">
+
       <textarea  class="form-control" style="bottom: 0px; height: 60px;  width: 270px; right: 0px; position:relative;" type="text" id="txt"></textarea>
       <input id="btn" style="width: 270px; bottom: -10px; height: 40px; right:0px; position:relative;" type="submit"  class="btn btn-primary" value="Enter Message" />
+
+      </form>
+      
       <button id = "gotoTimeline" style="width: 270px; bottom: -25px; height: 40px; right:3px; position:relative;" onclick="gotoTimeline()" class="btn btn-primary" >Back to timeline</button>
       </div>
 
         
 
+        
             <div id="question-container">
                 <div id="question-list-container">
                 </div>
+                <% if( isPresenter == true){ %>
+                <div id="question-form-container-presenter">
+                
+            <% } else{ %>
+             
                 <div id="question-form-container">
-                </div>
-            </div>      
+              
+            <% } %>
+                  </div>
+            </div>
             <div id="feedback-container">
       </div>
+
         </div>
      </div>
 
@@ -233,11 +233,8 @@
         var $message = $('#message');
         var $chat = $('#chat');
         
-        var $userFormArea = $('#userFormArea');
-        var $userForm = $('#userForm');
+   
         var $users = $('#users');
-        var $username = $('#username');
-        var $duplicatename = $('#duplicatename');
         var $Onlineusers = $('#Onlineusers');
         var $minichat = $('#minichat');
         
@@ -249,7 +246,7 @@
       var $messageArea = $('#messageArea'); 
         variable = click_id;
 
-         socket.emit('join', {'roomname': click_id});
+         socket.emit('join', {'roomname': click_id, 'username': <%- JSON.stringify(username) %>});
    
           socket.once('join', function(data){
 
@@ -268,7 +265,7 @@
 
         function gotoTimeline(){    
 
-          socket.emit('leave chat', {'roomname': variable});
+          socket.emit('leave chat', {'roomname': variable, 'username': <%- JSON.stringify(username) %>});
           socket.once('leave chat', function(data){
 
           $('#question-container').show(500);
@@ -284,7 +281,7 @@
              $('#btn').click(function(e){
             e.preventDefault();
 
-            socket.emit('message', {'message': $('#txt').val(), 'roomname': variable});
+            socket.emit('message', {'message': $('#txt').val(), 'roomname': variable, 'username':<%- JSON.stringify(username) %>});
             $('#txt').val('');
             });
 
@@ -294,21 +291,6 @@
                  });
             });
 
-
-        $userForm.submit(function(e){
-          e.preventDefault();
-          socket.emit('new user', $username.val(), function(data){
-            if(data){
-              $userFormArea.hide(200);
-              $Onlineusers.hide(200);
-               $('#question-container').show(500);
-                $('#feedback-container').show(500);
-            }else{
-              $duplicatename.html('<b>'+'Sorry can not use a duplicate name that is already in the onlinelist.'+'</b>');
-            }
-          });
-          $username.val('');
-        });
           socket.on('get users', function(data){
             var html = '';
             for(i = 0; i < data.length; i++){
