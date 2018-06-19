@@ -255,6 +255,31 @@ var scriptController = {
             }
          }
       
+
+      if(pipe[1] =="assistant" & pipe[2]=="read" & pipe[3]=="question"){
+        var n = parseInt(pipe[4])-1;
+        var el = document.getElementsByClassName('question_number')[n];
+
+   
+          var text = (el.innerHTML).split("</span>");
+          var msg = new SpeechSynthesisUtterance();
+          msg.lang='en-US';
+          var voices = speechSynthesis.getVoices();
+
+          msg.voice = voices[1];
+          msg.rate = 10 / 10;
+          msg.pitch = 1;
+          msg.text = text;
+
+          msg.onend = function(e) {
+          console.log('Finished in ' + event.elapsedTime + ' seconds.');
+          };
+
+          speechSynthesis.speak(msg);
+
+
+      }
+  
       if (pipe[2]=="assistant" &pipe[3]=="go" & pipe[4]=="back"){
           gotoTimeline();
       }
@@ -335,14 +360,6 @@ var scriptController = {
       var order = order_text.split(" "); 
        
       order.forEach(this._process_word);
-      
-          
-          
-         
-          
-      
-      
-       
   },    
     
   _display_script: function(script){

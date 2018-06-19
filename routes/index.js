@@ -136,6 +136,9 @@ router.get('/login', function(req, res, next){
 router.get('/emotion', function(req, res, next){
     return res.render('emotion.ejs');
 });
+router.get('/speech', function(req, res, next){
+    return res.render('speech.ejs');
+});
 
 router.post('/login', function(req, res, next){
     User.findOne({email:req.body.email}, function(err, data){
