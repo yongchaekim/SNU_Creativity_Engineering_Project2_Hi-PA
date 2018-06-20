@@ -334,9 +334,9 @@ var scriptController = {
 
       }
 
-      if(pipe[1] =="assistant" & pipe[2]=="finish" || pipe[3]=="reading"){
+      if(pipe[1] =="assistant" & pipe[2]=="finish"){
        
-          window.speechSynthesis.cancel();
+          speechSynthesis.cancel();
 
       }
   
