@@ -6,7 +6,7 @@
   "scripts": {
     "test": "TEST=true mocha server-test",
     "http": "node index.js",
-    "https": "HTTPS=true node index.js"
+    "https": "HTTPS=true node index.js",
     "start": "nodemon server"
   },
   "express-session": {

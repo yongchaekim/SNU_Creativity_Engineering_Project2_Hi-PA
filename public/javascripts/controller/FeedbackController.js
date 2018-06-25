@@ -4,8 +4,8 @@ var controller = {
     __templates: ['/public/views/feedbackForm.ejs','/public/views/feedbackShow.ejs'],
 
     socket: null,
-    _data: {fast: 0, slow: 0, loud: 0, small: 0},
-    _selectedFeedback: {speed: 0, volume: 0},
+    _data: {fast: 0, slow: 0, loud: 0, small: 0, sad: 0, happy: 0},
+    _selectedFeedback: {speed: 0, volume: 0, emotion: 0},
     __init: function(context) {
       if (config.isPresenter) {
         this.view.update('{rootElement}','feedbackShow');
@@ -24,11 +24,25 @@ var controller = {
         this.socket.on('VolumeFeedback', (data) => {
           this._receivedVolumeFeedback(data);
         });
+          this.socket.on('EmotionFeedback', (data) => {
+          this._receivedEmotionFeedback(data);
+        });
       } else {
         this.socket = io('/socket/feedback/audience');
       }
     },
-
+    
+    _receivedEmotionFeedback(){
+        if (this._data.sad != data.sad){
+            this._refreshShow('#feedback-sad-num', data.sad);
+        }
+        if (this._data.happy != data.happy){
+            this._refreshShow('#feedback-happy-num', data.happy);
+        }
+        this._data.sad = data.sad;
+        this._data.happy = data.happy;
+    },
+    
     _receivedVolumeFeedback(data) {
       if (this._data.loud !== data.loud) {
         this._refreshShow('#feedback-loud-num', data.loud);
@@ -71,6 +85,11 @@ var controller = {
       this._selectedFeedback.volume = sign;
       this.view.update('{rootElement}', 'feedbackForm', this._selectedFeedback);
     },
+    _emotionFeedback(sign){
+        this.socket.emit('EmotionFeedback', {sign: sign});
+      this._selectedFeedback.volume = sign;
+        this.view.update('{rootElement}', 'feedbackForm', this._selectedFeedback);
+    },
 
     '.feedback-volume click': function(context, $el) {
       let sign = Number.parseInt($el.attr('sign'));
@@ -80,6 +99,11 @@ var controller = {
     '.feedback-speed click': function(context, $el) {
       let sign = Number.parseInt($el.attr('sign'));
       this._speedFeedback(sign);
+    },
+    
+    '.feedback-emotion click': function(context, $el) {
+      let sign = Number.parseInt($el.attr('sign'));
+      this._emotionFeedback(sign);
     }
   };
   h5.core.expose(controller);

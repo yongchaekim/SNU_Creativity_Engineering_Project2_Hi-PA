@@ -85,7 +85,7 @@ body {
 
 
 #question-form-container {
-  width: 80%;
+  width: 100%;
 }
 
 $submit-button-height: 70px;
@@ -175,9 +175,9 @@ input{
 }
 
 .question-div {
-  width: 80%;
+  width: 50%;
   padding: 5px;
-  right: -20%;
+  right: -40%;
   position: relative;
   &:hover {
     background: #eeeeee;
@@ -221,7 +221,7 @@ input{
   bottom: -20px;
   width: 8px;
   background: #abebc6;
-  left: 32%;
+  left: 31.7%;
   margin-left: -10px;
 }
 

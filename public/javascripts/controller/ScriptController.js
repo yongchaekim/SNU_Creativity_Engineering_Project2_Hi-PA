@@ -48,7 +48,6 @@ var scriptController = {
       this.view.update('#script-face', 'script-face', null);
       this.__ready_presenter();
     } else {
-      document.getElementById('script-result').style.width = '97%'
     }
 
     var txtFile = "/public/javascripts/stopWords.json";
@@ -218,7 +217,7 @@ var scriptController = {
     pipe.shift();
       
       if(state=="answer"){
-
+          
           document.getElementById("txt").value += " "+item;
       }
       
@@ -229,24 +228,6 @@ var scriptController = {
         e.which=e.keyCode;
         e.metaKey=false;
         e.bubbles=true;
-
-         var text = 'moved slide to next';
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
-
-
         document.dispatchEvent(e);
       }
       
@@ -258,50 +239,14 @@ var scriptController = {
         e.metaKey=false;
         e.bubbles=true;
         document.dispatchEvent(e);
-
-        var text = 'moved slide to previous';
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
-
       }
       
       if(pipe[1]=="assistant" & pipe[2]=="open" & pipe[3]=="question"){
           var n = parseInt(pipe[4])-1;
           var el=document.getElementsByClassName('chat_button')[n];
           var etype='click';
-
-          var text = 'opened question for adding presenters solution';
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
-
-
           if (el.fireEvent) {
             el.fireEvent('on' + etype);
-
           } else {
               var evObj = document.createEvent('Events');
               evObj.initEvent(etype, true, false);
@@ -309,98 +254,20 @@ var scriptController = {
             }
          }
       
-
-      if(pipe[1] =="assistant" & pipe[2]=="read" & pipe[3]=="question"){
-        var n = parseInt(pipe[4])-1;
-        var el = document.getElementsByClassName('question_number')[n];
-
-   
-          var text = (el.innerHTML).split("</span>");
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
-
-
-      }
-
-      if(pipe[1] =="assistant" & pipe[2]=="finish"){
-       
-          speechSynthesis.cancel();
-
-      }
-  
       if (pipe[2]=="assistant" &pipe[3]=="go" & pipe[4]=="back"){
-         var text = 'going back to question timeline';
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
-
           gotoTimeline();
+      }
+      
+      if (pipe[2]=="assistant" &pipe[3]=="check" & pipe[4]=="emotions"){
+          testMethod('emotion');
       }
       
       if(pipe[3]=="assistant" & pipe[4]=="answer"){
           state = "answer";
-
-          var text = 'Ready to record presenters solution';
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
-        
       }
-
-    
       
-      if(pipe[3]=="assistant" & pipe[4]=="stop"){
+      if(pipe[3]=="assistant" & pipe[4]=="finish"){
           state = "";
-           var text = 'finish inputting solutions';
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
-
       }
       
       if(pipe[2]=="assistant" & pipe[3]=="link"){
@@ -409,8 +276,6 @@ var scriptController = {
           var words = value.split(" ");
           var n = words.length;
           value="";
-
-          
           
           for (var i = 0; i<n-2;i++){
               value+=words[i]+" ";
@@ -420,22 +285,6 @@ var scriptController = {
           document.getElementById("txt").value = value;
           
           document.getElementById("txt").value += " <a href=\""+pipe[4]+"\">" +pipe[4]+"</a> ";
-
-          var text = 'Adding a link';
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
       }
       
       if(pipe[2]=="assistant" & pipe[3]=="delete"){
@@ -450,21 +299,6 @@ var scriptController = {
               value+=words[i]+" ";
           }
           
-          var text = 'Deleted a word';
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
     
           document.getElementById("txt").value = value;
       }
@@ -485,27 +319,8 @@ var scriptController = {
           
           var el=document.getElementById('btn');
           var etype='click';
-
-                var text = 'Successfully posted solution on the question timeline';
-          var msg = new SpeechSynthesisUtterance();
-          msg.lang='en-US';
-          var voices = speechSynthesis.getVoices();
-
-          msg.voice = voices[1];
-          msg.rate = 10 / 10;
-          msg.pitch = 1;
-          msg.text = text;
-
-          msg.onend = function(e) {
-          console.log('Finished in ' + event.elapsedTime + ' seconds.');
-          };
-
-          speechSynthesis.speak(msg);
-
           if (el.fireEvent) {
-
             el.fireEvent('on' + etype);
-
           } else {
               var evObj = document.createEvent('Events');
               evObj.initEvent(etype, true, false);
@@ -523,6 +338,14 @@ var scriptController = {
       var order = order_text.split(" "); 
        
       order.forEach(this._process_word);
+      
+          
+          
+         
+          
+      
+      
+       
   },    
     
   _display_script: function(script){

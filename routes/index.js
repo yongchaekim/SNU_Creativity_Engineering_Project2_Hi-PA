@@ -137,7 +137,6 @@ router.get('/emotion', function(req, res, next){
     return res.render('emotion.ejs');
 });
 
-
 router.post('/login', function(req, res, next){
     User.findOne({email:req.body.email}, function(err, data){
         if(data){

@@ -4,6 +4,7 @@ var config = require('../config');
 var feedback = {};
 feedback.speed = {fast : 0, slow : 0};
 feedback.sound = {loud : 0, small : 0};
+feedback.emotion = {happy : 0, sad : 0};
 feedback.threshold = {
     speed : config.speed,
     sound : config.sound
@@ -11,6 +12,7 @@ feedback.threshold = {
 feedback.reset = () => {
     feedback.speed = {fast : 0, slow : 0};
     feedback.sound = {loud : 0, small : 0};
+    feedback.emotion = {happy : 0, sad : 0};
 }
 feedback.presenter = io.of('/socket/feedback/presenter');
 feedback.audience = io.of('/socket/feedback/audience');
@@ -39,6 +41,17 @@ feedback.audience.on('connection', (socket) => {
                 feedback.sound.loud++;
         }
         feedback.presenter.emit('VolumeFeedback', feedback.sound);
+    });
+    socket.on('EmotionFeedback', (data) => {
+        switch(data.sign) {
+            case -1:
+                feedback.emotion.sad++;
+                break;
+            case 1:
+                feedback.emotion.happy++;
+                break;
+        }
+        feedback.presenter.emit('EmotionFeedback', feedback.emotion);
     });
 });
 feedback.send = () => {
